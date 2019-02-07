@@ -19,7 +19,7 @@ public class PlayFish extends GFX {
 	/**
 	 * Game size (visual). TODO Try changing this to 600.
 	 */
-	public static int VISUAL_GRID_SIZE = 400;
+	public static int VISUAL_GRID_SIZE = 700;
 	/**
 	 * Game size (logical). TODO Try changing this to 15 or so.
 	 */

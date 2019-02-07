@@ -199,6 +199,9 @@ public class World {
 		for (WorldObject it : inSpot) {
 			// TODO(P2): Don't let us move over rocks as a Fish.
 			// The other fish shouldn't step "on" the player, the player should step on the other fish.
+			if(it instanceof Rock) {
+				return false;
+			}
 			if (it instanceof Snail) {
 				// This if-statement doesn't let anyone step on the Snail.
 				// The Snail(s) are not gonna take it.
@@ -224,6 +227,11 @@ public class World {
 	 * We don't know followers is a {@code List<Fish>} but it should work no matter what!
 	 * @param target the leader.
 	 * @param followers a set of objects to follow the leader.
+	 * 
+	 * recentPositions is the history of past leading fish positions
+	 * followers is an array list of the fish that follow you
+	 * target is the next destination for a following fish
+	 * 
 	 */
 	public static void objectsFollow(WorldObject target, List<? extends WorldObject> followers) {
 		// TODO(P2) Comment this method!
@@ -233,7 +241,7 @@ public class World {
 		// Why is past = putWhere[i+1]? Why not putWhere[i]?
 		List<IntPoint> putWhere = new ArrayList<>(target.recentPositions);
 		for (int i=0; i<followers.size(); i++) {
-			IntPoint past = putWhere.get(i+1);
+			IntPoint past = putWhere.get(i+1); //putWhere.get(i) would give current position, we want the next block
 			followers.get(i).setPosition(past.x, past.y);
 		}
 	}
