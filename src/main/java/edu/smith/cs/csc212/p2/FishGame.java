@@ -46,7 +46,7 @@ public class FishGame {
 	/**
 	 * number of rocks on the screen
 	 */
-	int numRock;
+	public final int NUM_ROCK;
 	
 	/**
 	 * Create a FishGame of a particular size.
@@ -62,10 +62,12 @@ public class FishGame {
 		// Add a home!
 		home = world.insertFishHome();
 		
-		numRock = 10;
-		for (int i=0; i<numRock; i++) {
+		NUM_ROCK = 10;
+		for (int i=0; i<NUM_ROCK/2; i++) {
 			world.insertRockRandomly();
+			world.insertFallingRockRandomly();
 		}
+		
 		
 		world.insertSnailRandomly();
 		
@@ -120,9 +122,8 @@ public class FishGame {
 				// Remove this fish from the missing list.
 				missing.remove(wo);
 				
-				// Remove from world.
-				// TODO(lab): add to found instead! (So we see objectsFollow work!)
-				world.remove(wo);
+				//add to found list (follows leader around)
+				found.add((Fish) wo);
 				
 				// Increase score when you find a fish!
 				score += 10;
@@ -145,8 +146,13 @@ public class FishGame {
 		for (Fish lost : missing) {
 			// 30% of the time, lost fish move randomly.
 			if (rand.nextDouble() < 0.3) {
+				lost.fastScared = false;
+			}
+			else {
+				lost.fastScared = true;
 				lost.moveRandomly();
 			}
+			//TODO lost.fastScared
 		}
 	}
 

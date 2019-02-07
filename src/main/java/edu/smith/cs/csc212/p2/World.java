@@ -149,6 +149,11 @@ public class World {
 		insertRandomly(r);
 		return r;
 	}
+	public FallingRock insertFallingRockRandomly() {
+		FallingRock f = new FallingRock(this);
+		insertRandomly(f);
+		return f;
+	}
 	
 	/**
 	 * Insert a new Fish into the world at random of a specific color.

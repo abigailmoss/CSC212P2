@@ -34,6 +34,8 @@ public class Fish extends WorldObject {
 	 */
 	boolean player = false;
 	
+	boolean fastScared = false;
+	
 	/**
 	 * Called only on the Fish that is the player!
 	 */
