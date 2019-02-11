@@ -18,12 +18,14 @@ public class Fish extends WorldObject {
 	public static Color[] COLORS = {
 			Color.red,
 			Color.green,
-			Color.yellow,
 			Color.cyan,
 			Color.pink,
-			Color.orange
+			Color.gray,
+			
+			
+			//This color is worth more points than the other fish
+			Color.yellow
 
-			// TODO: (P2) Maybe make a special fish that is more points?
 	};
 	/**
 	 * This is an index into the {@link #COLORS} array.
@@ -33,8 +35,9 @@ public class Fish extends WorldObject {
 	 * Whether or not this is the player;
 	 */
 	boolean player = false;
+	public boolean fastScared;
 	
-	boolean fastScared = false;
+	
 	
 	/**
 	 * Called only on the Fish that is the player!
@@ -49,11 +52,20 @@ public class Fish extends WorldObject {
 	 * @param color Color by number.
 	 * @param world The world itself.
 	 */
-	public Fish(int color, World world) {
+	public Fish(int color, World world, boolean fastScared) {
 		super(world);
 		this.color = color;
+		this.fastScared = fastScared;
+		if (rand.nextInt(2) == 0) {
+			this.fastScared = true;
+		}
+		else {
+			this.fastScared = false;
+		}
+		
 	}
 	
+
 	/**
 	 * What actual color is this fish? We store an index, so get it here.
 	 * @return the Color object from our array.
@@ -66,6 +78,7 @@ public class Fish extends WorldObject {
 	 * Animate our fish by facing left and then right over time.
 	 */
 	private int dt = 0;
+
 	
 	/**
 	 * Go ahead and ignore this method if you're not into graphics.
@@ -109,6 +122,8 @@ public class Fish extends WorldObject {
 		
 		flipped.dispose();
 	}
+	
+
 	
 	@Override
 	public void step() {

@@ -1,5 +1,6 @@
 package edu.smith.cs.csc212.p2;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -34,6 +35,11 @@ public class FishGame {
 	List<Fish> found;
 	
 	/**
+	 * These are fish we've led home
+	 */
+	List<Fish> atHome;
+	
+	/**
 	 * Number of steps!
 	 */
 	int stepsTaken;
@@ -64,15 +70,16 @@ public class FishGame {
 		
 		NUM_ROCK = 10;
 		for (int i=0; i<NUM_ROCK/2; i++) {
-			world.insertRockRandomly();
-			world.insertFallingRockRandomly();
+			Rock stone = world.insertRockRandomly();
+			FallingRock boulder = world.insertFallingRockRandomly();
+			
 		}
 		
 		
 		world.insertSnailRandomly();
 		
 		// Make the player out of the 0th fish color.
-		player = new Fish(0, world);
+		player = new Fish(0, world, false);
 		// Start the player at "home".
 		player.setPosition(home.getX(), home.getY());
 		player.markAsPlayer();
@@ -126,7 +133,12 @@ public class FishGame {
 				found.add((Fish) wo);
 				
 				// Increase score when you find a fish!
-				score += 10;
+				if (((Fish) wo).getColor() == Color.yellow) {
+					score+=50;
+				}
+				else {
+					score += 10;
+				}
 			}
 		}
 		
@@ -146,13 +158,12 @@ public class FishGame {
 		for (Fish lost : missing) {
 			// 30% of the time, lost fish move randomly.
 			if (rand.nextDouble() < 0.3) {
-				lost.fastScared = false;
-			}
-			else {
-				lost.fastScared = true;
 				lost.moveRandomly();
 			}
-			//TODO lost.fastScared
+			if (lost.fastScared) {
+				lost.moveRandomly();
+			}
+			
 		}
 	}
 
@@ -166,7 +177,6 @@ public class FishGame {
 		System.out.println("Clicked on: "+x+","+y+ " world.canSwim(player,...)="+world.canSwim(player, x, y));
 		List<WorldObject> atPoint = world.find(x, y);
 		// TODO(P2) allow the user to click and remove rocks.
-
+			
 	}
-	
 }

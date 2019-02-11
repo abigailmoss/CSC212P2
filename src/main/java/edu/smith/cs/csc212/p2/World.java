@@ -1,5 +1,6 @@
 package edu.smith.cs.csc212.p2;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -161,10 +162,12 @@ public class World {
 	 * @return the new fish itself.
 	 */
 	public Fish insertFishRandomly(int color) {
-		Fish f = new Fish(color, this);
+		Fish f = new Fish(color, this, false);
 		insertRandomly(f);
 		return f;
 	}
+	
+
 	
 	public FishHome insertFishHome() {
 		FishHome home = new FishHome(this);
