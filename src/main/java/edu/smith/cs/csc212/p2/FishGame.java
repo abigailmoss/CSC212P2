@@ -64,6 +64,7 @@ public class FishGame {
 		
 		missing = new ArrayList<Fish>();
 		found = new ArrayList<Fish>();
+		atHome = new ArrayList<Fish>();
 		
 		// Add a home!
 		home = world.insertFishHome();
@@ -107,7 +108,10 @@ public class FishGame {
 	 */
 	public boolean gameOver() {
 		// TODO(P2) We want to bring the fish home before we win!
-		return missing.isEmpty();
+		if (missing.isEmpty() && found.isEmpty()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -133,12 +137,10 @@ public class FishGame {
 				found.add((Fish) wo);
 				
 				// Increase score when you find a fish!
-				if (((Fish) wo).getColor() == Color.yellow) {
-					score+=50;
-				}
-				else {
-					score += 10;
-				}
+			}
+			//If fish reaches FishHome reachHome();
+			if (wo instanceof FishHome) {
+				reachHome();
 			}
 		}
 		
@@ -149,6 +151,22 @@ public class FishGame {
 		// Step any world-objects that run themselves.
 		world.stepAll();
 	}
+	
+	public void reachHome() {
+		for (Fish f : this.found) {
+			atHome.add(f);
+			this.world.remove(f);
+			if (f.getColor() == Color.yellow) {
+				score+=50;
+			}
+			else {
+				score += 10;
+			}	
+		}
+		this.found.removeAll(atHome);
+	}
+
+
 	
 	/**
 	 * Call moveRandomly() on all of the missing fish to make them seem alive.

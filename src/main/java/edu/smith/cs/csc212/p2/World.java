@@ -215,6 +215,7 @@ public class World {
 				// The Snail(s) are not gonna take it.
 				return false;
 			}
+			
 		}
 		
 		// If we didn't see an obstacle, we can move there!
